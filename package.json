@@ -12,6 +12,7 @@
     "@emotion/react": "^11.10.4",
     "@fontsource/poppins": "^4.5.9",
     "@mantine/core": "^5.4.1",
+    "@mantine/form": "^5.4.1",
     "@mantine/hooks": "^5.4.1",
     "next": "12.3.1",
     "react": "18.2.0",
