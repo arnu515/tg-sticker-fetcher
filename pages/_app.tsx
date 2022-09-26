@@ -1,8 +1,13 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import "@fontsource/poppins/400.css";
+import type { AppProps } from "next/app";
+import { MantineProvider } from "@mantine/core";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <Component {...pageProps} />
+    </MantineProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
