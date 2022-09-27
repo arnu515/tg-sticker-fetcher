@@ -3,9 +3,22 @@ import tg, { StickerSet, TGResponse, File } from "$tg";
 import { Button, Grid, Text } from "@mantine/core";
 import Link from "next/link";
 import Sticker from "lib/components/Sticker";
+import redis from "$rd";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const pack = query.pack as string;
+  try {
+    const cached = (await redis.get("packs:" + pack)) as any;
+    console.log(cached);
+    if (cached) {
+      console.log("cache hit");
+      return { props: cached };
+    }
+  } catch (e) {
+    console.log("error, ", e);
+    await redis.del("packs:" + pack);
+  }
+  console.log("cache miss");
   try {
     const url = new URL(pack);
     if (url.hostname !== "t.me") throw new Error("Invalid URL");
@@ -33,7 +46,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       })
     );
 
-    return { props: { pack: data.result, stickerFiles } };
+    const props = { pack: data.result, stickerFiles };
+    await redis.set("packs:" + pack, JSON.stringify(props), {
+      ex: 60 * 60 * 24,
+    });
+
+    return { props };
   } catch (e) {
     console.error(e);
     return {

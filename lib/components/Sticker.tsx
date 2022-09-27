@@ -18,7 +18,6 @@ export default function Sticker({ sticker }: { sticker: StickerWithFile }) {
     })();
   }, [sticker]);
 
-  console.log(sticker.file);
   if (!lottiePlayer) return <h1>loading</h1>;
 
   return (
