@@ -15,6 +15,7 @@
     "@mantine/core": "^5.4.1",
     "@mantine/form": "^5.4.1",
     "@mantine/hooks": "^5.4.1",
+    "@upstash/redis": "^1.13.1",
     "@zip.js/zip.js": "^2.6.32",
     "ky": "^0.31.3",
     "ky-universal": "^0.10.1",
