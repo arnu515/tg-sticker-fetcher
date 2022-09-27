@@ -60,6 +60,10 @@ export interface Sticker {
   file_size?: number;
 }
 
+export interface StickerWithFile extends Sticker {
+  file: File;
+}
+
 export interface StickerSet {
   /** Sticker set name */
   name: string;
@@ -75,6 +79,14 @@ export interface StickerSet {
   stickers: Sticker[];
   /** Optional. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format */
   thumb?: PhotoSize;
+}
+
+export interface TGResponse<T = unknown> {
+  ok: boolean;
+  result: T;
+  // for errors
+  error_code?: number;
+  description?: string;
 }
 
 export default tg;
