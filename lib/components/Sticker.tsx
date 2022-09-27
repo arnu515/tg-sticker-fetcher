@@ -42,6 +42,18 @@ export default function Sticker({ sticker }: { sticker: StickerWithFile }) {
       >
         {sticker.emoji}
       </Text>
+      <Text
+        style={{
+          position: "absolute",
+          right: 10,
+          backgroundColor: "black",
+          color: "white",
+          bottom: 10,
+          fontSize: "16px",
+        }}
+      >
+        {sticker.file.file_path}
+      </Text>
     </Box>
   );
 }
