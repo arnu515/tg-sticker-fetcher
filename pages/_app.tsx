@@ -1,14 +1,24 @@
 import "@fontsource/poppins/400.css";
 import type { AppProps } from "next/app";
-import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
-import { useEffect, useState } from "react";
+import {
+  ColorSchemeProvider,
+  MantineProvider,
+  ColorScheme,
+} from "@mantine/core";
+import { useLocalStorage, useHotkeys, useColorScheme } from "@mantine/hooks";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  useEffect(() => {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-    setTheme(prefersDark.matches ? "dark" : "light");
-  }, []);
+  const preferredColorScheme = useColorScheme();
+  const [theme, setTheme] = useLocalStorage<ColorScheme>({
+    key: "mantine-color-scheme",
+    defaultValue: preferredColorScheme,
+    getInitialValueInEffect: true,
+  });
+
+  const toggleTheme = (value?: ColorScheme) => {
+    setTheme(value || theme === "light" ? "dark" : "light");
+  };
+  useHotkeys([["mod+J", () => toggleTheme()]]);
 
   return (
     <ColorSchemeProvider
@@ -18,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
-        theme={{ fontFamily: "Poppins, sans-serif", colorScheme: "dark" }}
+        theme={{ fontFamily: "Poppins, sans-serif", colorScheme: theme }}
       >
         <Component {...pageProps} />
       </MantineProvider>
