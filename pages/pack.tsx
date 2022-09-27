@@ -66,7 +66,7 @@ const Pack: NextPage<{ pack: StickerSet; stickerFiles: File[] }> = ({
           </Button>
         </Link>
       </Text>
-      <Grid grow gutter="md" mt="1rem">
+      <Grid grow gutter="md" m="1rem">
         {pack.stickers.map((sticker, i) => (
           <Grid.Col md={3} lg={2} sm={4} key={sticker.file_id}>
             <Sticker sticker={{ ...sticker, file: stickerFiles[i] }} />
